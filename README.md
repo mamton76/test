@@ -24,8 +24,8 @@ public class HandlerThreadTest {
             Thread.sleep(100);
         }
         MyHandler mHandler = new MyHandler(thread.getLooper());
-        mHandler.logAndSendEmptyMessage(1);
-        thread.mHandler.logAndSendEmptyMessage(2);
+        mHandler.logAndSendEmptyMessage(1, 0);
+        thread.mHandler.logAndSendEmptyMessage(2, 0);
         sleep();
     }
 
@@ -35,11 +35,11 @@ public class HandlerThreadTest {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                handler.logAndSendEmptyMessage(2);
+                handler.logAndSendEmptyMessage(2, 0);
             }
         };
         thread.start();
-        handler.logAndSendEmptyMessage(1);
+        handler.logAndSendEmptyMessage(1, 0);
 
         sleep();
     }
@@ -54,11 +54,11 @@ public class HandlerThreadTest {
         Thread thread1 = new Thread() {
             @Override
             public void run() {
-                thread.mHandler.logAndSendEmptyMessage(2);
+                thread.mHandler.logAndSendEmptyMessage(2, 0);
             }
         };
         thread1.start();
-        thread.mHandler.logAndSendEmptyMessage(1);
+        thread.mHandler.logAndSendEmptyMessage(1, 0);
 
         sleep();
     }
@@ -73,11 +73,11 @@ public class HandlerThreadTest {
         Thread thread1 = new Thread() {
             @Override
             public void run() {
-                thread.mHandler.logAndSendEmptyMessage(2);
+                thread.mHandler.logAndSendEmptyMessage(2, 0);
             }
         };
         thread1.start();
-        thread.mHandler.logAndSendEmptyMessage(1);
+        thread.mHandler.logAndSendEmptyMessage(1, 0);
 
         sleep();
     }
@@ -104,8 +104,14 @@ public class HandlerThreadTest {
         protected void onLooperPrepared() {
             super.onLooperPrepared();
             mHandler = new MyHandler(getLooper());
-            mHandler.logAndSendEmptyMessage(3);
+            mHandler.logAndSendEmptyMessage(3, 0);
+            mHandler.logAndSendEmptyMessage(4, 2000);
             mReady = true;
+        }
+
+        @Override
+        public void run() {
+            super.run();
         }
     }
 
@@ -118,11 +124,11 @@ public class HandlerThreadTest {
             super(looper);
         }
 
-        public void logAndSendEmptyMessage(int what) {
+        public void logAndSendEmptyMessage(int what, int delayMillis) {
             synchronized (o) {
                 System.out.println(System.currentTimeMillis() + " " + this.hashCode() + " " + what + " send thread " + Thread.currentThread().getName());
             }
-            sendEmptyMessage(what);
+            sendEmptyMessageDelayed(what, delayMillis);
         }
 
         @Override
@@ -145,7 +151,7 @@ public class HandlerThreadTest {
         public void run() {
             super.run();
             mHandler = new MyHandler(Looper.getMainLooper());
-            mHandler.logAndSendEmptyMessage(3);
+            mHandler.logAndSendEmptyMessage(3, 0);
         }
     }
 }
