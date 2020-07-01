@@ -1,0 +1,78 @@
+
+public class CarouselTurboAppReducer implements ZipMixerSource.Reducer {
+    @NonNull
+    @Override
+    public SuggestsContainer reduce(@NonNull SuggestsContainer localContainer, @NonNull SuggestsContainer onlineContainer) {
+        List<TurboAppSuggest> localTurbo = getCarouselSuggests(localContainer);
+        List<TurboAppSuggest> onlineTurbo = getCarouselSuggests(onlineContainer);
+        List<TurboAppSuggest> deduplicatedTurbo = deduplicate(localTurbo, onlineTurbo);
+
+        return SuggestsContainerHelper.replaceSuggests(onlineContainer, deduplicatedTurbo);
+    }
+
+    @VisibleForTesting
+    @NonNull
+    List<TurboAppSuggest> getCarouselSuggests(@NonNull SuggestsContainer container) {
+        List<TurboAppSuggest> suggests = new ArrayList<>();
+
+        for (BaseSuggest suggest : container.getSuggests()) {
+            if (SsdkSuggestType.SUGGEST_TYPE_CAROUSEL_TURBOAPP == suggest.getType()) {
+                suggests.add((TurboAppSuggest) suggest);
+            }
+        }
+        return suggests;
+    }
+
+    @VisibleForTesting
+    @NonNull
+    List<TurboAppSuggest> deduplicate(@NonNull List<TurboAppSuggest> onlineSuggests, @NonNull List<TurboAppSuggest> localSuggests) {
+        Map<Long, TurboAppSuggest> map = new LinkedHashMap<>();
+        for (TurboAppSuggest suggest : localSuggests) {
+            map.put(suggest.getMeta().getAppId(), suggest);
+        }
+        for (TurboAppSuggest suggest : onlineSuggests) {
+            if (!map.containsKey(suggest.getMeta().getAppId())) {
+                map.put(suggest.getMeta().getAppId(), suggest);
+            }
+        }
+        return new ArrayList<>(map.values());
+    }
+}
+
+
+    /**
+     * Replaces suggests with {@param newSuggests} type from {@param container} with {@param newSuggests}.
+     */
+    @NonNull
+    public static <T extends BaseSuggest> SuggestsContainer replaceSuggests(@NonNull SuggestsContainer container,
+                                                                            @NonNull List<T> newSuggests) {
+        if (newSuggests.isEmpty()) {
+            return container;
+        }
+        int type = newSuggests.get(0).getType();
+        boolean isInserted = false;
+
+        SuggestsContainer.Builder containerBuilder = new SuggestsContainer.Builder(container.getSourceType())
+                .setCandidate(container.getCandidate())
+                .setPrefetch(container.getPrefetch());
+
+        for (int i = 0; i < container.getGroupCount(); ++i) {
+            SuggestsContainer.Group group = container.getGroup(i);
+
+            SuggestsContainer.Group.GroupBuilder builder = containerBuilder.startGroupWithParams(group);
+
+            for (BaseSuggest suggest : container.getSuggestsInGroup(i)) {
+                if (type == suggest.getType()) {
+                    if (!isInserted) {
+                        builder.addSuggests(newSuggests);
+                        isInserted = true;
+                    }
+                } else {
+                    builder.addSuggest(suggest);
+                }
+            }
+            builder.endGroup();
+        }
+
+        return containerBuilder.build();
+    }
