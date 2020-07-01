@@ -1,0 +1,25 @@
+reduce(targetContainer, injectionContainer) {
+ Set usedSuggests = new TreeSet(comparator);
+
+ for (BaseSuggest suggest : targetContainer.getSuggestsInGroup(i)) {
+ //isTargetBefore - просто абстрактный метод, который можно было бы переопределять , но если очень хочется можно так же сравнивать типы как в replaceSuggests
+  if (!done && isTargetBefore(suggest)) {
+   for (BaseSuggest suggest1 : injectionContainer.getSuggests {
+      appendSuggestIsNotExists(suggest1,  builder, usedSuggests)
+   }
+   done = true;
+  }
+ appendSuggestIsNotExists(suggest,  builder, usedSuggests)
+ }
+ //добавляем саджесты в хвост, если не было подходящего саджеста перед которым это надо вставить
+ if (!done) {
+   builder.addSuggests(injectionContainer.getSuggests())
+ }
+}
+
+void appendSuggestIfNotExists(suggest, builder,  usedSuggests) {
+ if (!usedSuggest.contain(suggest)) {
+  builder.addSuggest(suggest)
+  usedSuggests.add(suggest)
+ }
+}
