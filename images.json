@@ -1,0 +1,176 @@
+{
+  "templates": {
+    "title_template": {
+      "type": "text",
+      "$text": "title_link",
+      "font_size": 20,
+      "line_height": 24,
+      "text_color": "#1A0DAB",
+      "max_lines": 3,
+      "action": {
+        "$url": "title_link_url",
+        "log_id": "title_link_url"
+      },
+      "margins": {
+        "left": 16,
+        "right": 16
+      }
+    },
+    "images_gallery_template": {
+      "type": "gallery",
+      "width": {
+        "type": "match_parent"
+      },
+      "paddings": {
+        "top": 8,
+        "left": 16,
+        "right": 16
+      },
+      "item_spacing": 4,
+      "$items": "items"
+    },
+    "result_image_template": {
+      "type": "image",
+      "$image_url": "image_url",
+      "width": {
+        "type": "fixed",
+        "value": 70
+      },
+      "height": {
+        "type": "fixed",
+        "value": 70
+      },
+      "action": {
+        "$url": "image_click_url",
+        "log_id": "image_click"
+      },
+      "border": {
+        "corner_radius": 8
+      },
+      "placeholder_color": "#00ffffff"
+    },
+    "yandex_images_template": {
+      "type": "container",
+      "orientation": "horizontal",
+      "items": [
+        {
+          "type": "image",
+          "$image_url": "site_favicon",
+          "width": {
+            "type": "fixed",
+            "value": 16
+          },
+          "height": {
+            "type": "match_parent"
+          },
+          "placeholder_color": "#00ffffff"
+        },
+        {
+          "type": "text",
+          "text": "Яндекс.Картинки",
+          "font_size": 15,
+          "line_height": 20,
+          "text_color": "#007700",
+          "max_lines": 1,
+          "width": {
+            "type": "wrap_content"
+          },
+          "margins": {
+            "left": 4
+          }
+        }
+      ],
+      "margins": {
+        "top": 1,
+        "left": 16,
+        "right": 16
+      }
+    },
+    "card_template": {
+      "type": "container",
+      "orientation": "vertical",
+      "height": {
+        "type": "wrap_content"
+      },
+      "background": [
+        {
+          "type": "solid",
+          "color": "#fff"
+        }
+      ],
+      "border": {
+        "corner_radius": 12,
+        "stroke": {
+          "color": "#E7E9EC",
+          "width": 1
+        }
+      },
+      "paddings": {
+        "top": 16,
+        "bottom": 16
+      },
+      "margins": {
+        "top": 8,
+        "bottom": 8
+      },
+      "$items": "items"
+    }
+  },
+  "card": {
+    "log_id": "images",
+    "states": [
+      {
+        "state_id": 1,
+        "div": {
+          "type": "card_template",
+          "items": [
+            {
+              "type": "title_template",
+              "title_link": "Миньоны в магните - смотрите картинки",
+              "title_link_url": "https://yandex.ru/images/touch/search?text=%D0%BC%D0%B8%D0%BD%D1%8C%D0%BE%D0%BD%D1%8B%20%D0%B2%20%D0%BC%D0%B0%D0%B3%D0%BD%D0%B8%D1%82%D0%B5&parent-reqid=1594902665444631-1035755471184525888600255-production-app-host-vla-web-yp-115&source=wiz"
+            },
+            {
+              "type": "yandex_images_template",
+              "site_favicon": "file:///android_asset/div/local_cdn/images.png"
+            },
+            {
+              "type": "images_gallery_template",
+              "items": [
+                {
+                  "type": "result_image_template",
+                  "image_url": "https://i.mycdn.me/i?r=AzEPZsRbOZEKgBhR0XGMT1Rk-J9u1r-6JbmP-z1xFzeDWKaKTM5SRkZCeTgDn6uOyic",
+                  "image_click_url": "https://yandex.ru/images/touch/search?source=wiz&text=миньоны%20в%20магните&pos=0&img_url=https%3A%2F%2Fsun3-13.userapi.com%2F7P3l7IVgdwLQyN0TBRaJT5Cx7J82N4a8hxkHhw%2Fx-BVyiOAnWk.jpg&rpt=simage&redircnt=1594904719.1"
+                },
+                {
+                  "type": "result_image_template",
+                  "image_url": "https://i.ytimg.com/vi/XY1sZwQMW3s/maxresdefault.jpg",
+                  "image_click_url": "https://yandex.ru/images/touch/search?source=wiz&text=миньоны%20в%20магните&redircnt=1594904719.1&pos=1&img_url=https%3A%2F%2Fsun9-22.userapi.com%2FjQMf89PPvi2oT0mm5PCXo_8MfgA2wzlC2FPY1Q%2FtyCk6LI04KU.jpg&rpt=simage"
+                },
+                {
+                  "type": "result_image_template",
+                  "image_url": "https://avatars.mds.yandex.net/get-zen_doc/3122622/pub_5ed729aa01012f5e999d5f61_5ed72a9132612b551be0bc5d/scale_1200",
+                  "image_click_url": "https://yandex.ru/images/touch/search?source=wiz&text=миньоны%20в%20магните&redircnt=1594904719.1&pos=2&img_url=https%3A%2F%2Fi.ytimg.com%2Fvi%2FSttyf0bUflg%2Fmaxresdefault.jpg&rpt=simage"
+                },
+                {
+                  "type": "result_image_template",
+                  "image_url": "https://i.mycdn.me/i?r=AzEPZsRbOZEKgBhR0XGMT1RkMjXfS2OObZOup44PiRelV6aKTM5SRkZCeTgDn6uOyic",
+                  "image_click_url": "https://yandex.ru/images/touch/search?source=wiz&text=%D0%BC%D0%B8%D0%BD%D1%8C%D0%BE%D0%BD%D1%8B%20%D0%B2%20%D0%BC%D0%B0%D0%B3%D0%BD%D0%B8%D1%82%D0%B5&redircnt=1594904719.1&pos=4&img_url=https%3A%2F%2Fi.mycdn.me%2Fi%3Fr%3DAzEPZsRbOZEKgBhR0XGMT1RkMjXfS2OObZOup44PiRelV6aKTM5SRkZCeTgDn6uOyic&rpt=simage"
+                },
+                {
+                  "type": "result_image_template",
+                  "image_url": "https://irecommend.ru/sites/default/files/imagecache/copyright1/user-images/457031/mDFu5FtJakEjAf3y0tCBwg.jpeg",
+                  "image_click_url": "https://yandex.ru/images/touch/search?source=wiz&text=миньоны%20в%20магните&redircnt=1594904719.1&pos=5&img_url=https%3A%2F%2Fwww.laststicker.ru%2Fi%2Fpost%2F566%2F566537_full.jpg&rpt=simage"
+                },
+                {
+                  "type": "result_image_template",
+                  "image_url": "https://irecommend.ru/sites/default/files/imagecache/copyright1/user-images/457031/mDFu5FtJakEjAf3y0tCBwg.jpeg",
+                  "image_click_url": "https://yandex.ru/images/touch/search?source=wiz&text=миньоны%20в%20магните&redircnt=1594904719.1&pos=8&img_url=https%3A%2F%2Firecommend.ru%2Fsites%2Fdefault%2Ffiles%2Fimagecache%2Fcopyright1%2Fuser-images%2F457031%2FmDFu5FtJakEjAf3y0tCBwg.jpeg&rpt=simage"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
